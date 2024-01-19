@@ -1,0 +1,4 @@
+.mk-lib/*
+.env
+.make.env
+./nodejs/src/node_modules/*

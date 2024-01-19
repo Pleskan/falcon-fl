@@ -1,0 +1,45 @@
+version: '3.8'
+
+services:
+
+  nginx:
+    image: nginx:bookworm
+    container_name: 'nginx'
+      
+  php:
+    image: php83-fpm
+    build:
+      context: .
+      dockerfile: php/Dockerfile
+    container_name: 'php'
+
+  postgresql:
+    image: postgres:13-bookworm
+    container_name: 'postgresql'
+
+  rabbitmq:
+    image: rabbitmq:3.10.25-management
+    container_name: 'rabbit'
+    
+  redis:
+    image: redis:bookworm
+    container_name: 'redis'
+         
+  app:
+    build: ./nodejs/src
+    container_name: 'nodejs'
+      
+  centrifugo:
+    container_name: centrifugo
+    image: centrifugo/centrifugo:v5    
+
+volumes:
+  postgresql:
+     driver: local
+  
+  redis:
+     driver: local  
+  
+networks:
+  internal:
+    driver: bridge    
