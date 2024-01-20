@@ -24,7 +24,9 @@ RUN apt-get update && apt-get install -y \
     && docker-php-ext-install -j$(nproc) mbstring \
     && docker-php-ext-install -j$(nproc) soap \
     && docker-php-ext-install -j$(nproc) exif \
-    && docker-php-ext-enable redis	
+    && docker-php-ext-enable redis
+
+COPY --from=composer:latest /usr/bin/composer /usr/local/bin/composer	
 		
 FROM golang:1.21-bookworm AS builder
 
