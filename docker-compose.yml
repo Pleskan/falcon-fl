@@ -10,7 +10,7 @@ services:
     image: php83-fpm
     build:
       context: .
-      dockerfile: php/Dockerfile
+      dockerfile: ./docker/php/Dockerfile
     container_name: 'php'
 
   postgresql:
@@ -26,7 +26,7 @@ services:
     container_name: 'redis'
          
   app:
-    build: ./nodejs/src
+    build: ./docker/nodejs/src
     container_name: 'nodejs'
       
   centrifugo:

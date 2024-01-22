@@ -1,2 +1,0 @@
-[program:uptime]
-command = /usr/bin/uptime
