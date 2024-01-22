@@ -31,12 +31,16 @@ status: ## Show status of containers
 ps: status ## Alias of status
 
 migrations:
-	@$(DOCKER_BINARY) exec -it  php php artisan migrate
+	@$(DOCKER_COMPOSE) exec -it  php php artisan migrate
 php-test:
-	@$(DOCKER_BINARY) exec -it php /bin/bash	
+	@$(DOCKER_COMPOSE) exec -it php /bin/bash	
 
 migrations-rollback:
-	@$(DOCKER_BINARY) exec -it php php artisan migrate:reset
+	@$(DOCKER_COMPOSE) exec -it php php artisan migrate:reset
+
+composer-install-deps:
+	@$(DOCKER_COMPOSE) exec -it php su - www-data -c 'cd /app && composer install'
+
 
 clean: confirm ## Clean all data
 	@$(DOCKER_COMPOSE) -f $(DOCKER_COMPOSE_FILE)  -f $(DOCKER_COMPOSE_OVERRIDE_FILE) down
