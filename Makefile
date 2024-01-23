@@ -39,7 +39,7 @@ migrations-rollback:
 	@$(DOCKER_COMPOSE) exec -it php php artisan migrate:reset
 
 composer-install-deps:
-	@$(DOCKER_COMPOSE) exec -it php su - www-data -c 'cd /app && composer install'
+	@$(DOCKER_COMPOSE) exec -it php composer install
 
 
 clean: confirm ## Clean all data

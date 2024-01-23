@@ -27,7 +27,7 @@ services:
     labels:
       chadburn.enabled: "true"
       chadburn.job-exec.datecron.schedule: "@every 60s"
-      chadburn.job-exec.datecron.command: "su - www-data -c php artisan schedule:run >> /dev/null 2>&1"
+      chadburn.job-exec.datecron.command: "php artisan schedule:run"
     
     networks:
       - internal  
