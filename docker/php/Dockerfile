@@ -35,7 +35,7 @@ ADD ./docker/php/supervisord/ /src
 
 WORKDIR /src
 
-RUN GOOS=linux go build -tags release -a -ldflags "-linkmode external -extldflags -static" -o /usr/local/bin/supervisord
+RUN GOOS=linux go build -tags release -a -ldflags "-linkmode external -extldflags -static" -o /usr/local/bin/supervisord 
 
 FROM php-fpm
 
