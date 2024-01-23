@@ -31,7 +31,11 @@ services:
       
   centrifugo:
     container_name: centrifugo
-    image: centrifugo/centrifugo:v5    
+    image: centrifugo/centrifugo:v5
+
+  chadburn:
+    image: premoweb/chadburn:latest
+    container_name: 'chadburn'    
 
 volumes:
   postgresql:

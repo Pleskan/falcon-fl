@@ -24,6 +24,11 @@ services:
       - ./:/app
       - ./docker/supervisor/supervisor.conf:/etc/supervisor.conf 
       - ./docker/supervisor/conf.d:/etc/supervisor/
+    labels:
+      chadburn.enabled: "true"
+      chadburn.job-exec.datecron.schedule: "@every 60s"
+      chadburn.job-exec.datecron.command: "su - www-data -c 'php artisan schedule:run >> /dev/null 2>&1'"
+    
     networks:
       - internal  
 
@@ -55,6 +60,7 @@ services:
       RABBITMQ_DEFAULT_USER: '${RABBIT_USER}'
       RABBITMQ_DEFAULT_PASS: '${RABBIT_PASSWORD}'
       RABBITMQ_DEFAULT_VHOST: '${RABBIT_HOST}'
+    
     networks:
       - internal
     
@@ -75,7 +81,6 @@ services:
     restart: no    
     stdin_open: true
     tty: true
-    
     networks:
       - internal
     
@@ -89,7 +94,15 @@ services:
       nofile:
         soft: 65535
         hard: 65535
-    
+    networks:
+      - internal      
+          
+  chadburn:
+    depends_on:
+      - php
+    command: daemon
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro  
     networks:
       - internal  
         
@@ -103,4 +116,4 @@ volumes:
   
 networks:
   internal:
-    driver: bridge    
+    driver: bridge
