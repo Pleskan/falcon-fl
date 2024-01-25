@@ -24,8 +24,10 @@ RUN apt-get update && apt-get install -y \
     && docker-php-ext-install -j$(nproc) mbstring \
     && docker-php-ext-install -j$(nproc) soap \
     && docker-php-ext-install -j$(nproc) exif \
+    && docker-php-ext-install -j$(nproc) sockets \
     && docker-php-ext-enable redis \
-    && usermod -s /bin/bash www-data	
+    && usermod -s /bin/bash www-data \	
+    && mkdir -pv /var/log/php-fpm	
 
 COPY --from=composer:latest /usr/bin/composer /usr/local/bin/composer	
 		
@@ -40,6 +42,4 @@ RUN GOOS=linux go build -tags release -a -ldflags "-linkmode external -extldflag
 FROM php-fpm
 
 COPY --from=builder /usr/local/bin/supervisord /usr/local/bin/supervisord
-COPY ./docker/php/entrypoint.sh /
-RUN chmod +x /entrypoint.sh
-ENTRYPOINT ["/bin/bash", "-c","/entrypoint.sh"]
+ENTRYPOINT ["/usr/local/bin/supervisord","-c","/etc/supervisor.conf"," -d"]
