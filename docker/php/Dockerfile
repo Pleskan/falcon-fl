@@ -27,7 +27,9 @@ RUN apt-get update && apt-get install -y \
     && docker-php-ext-install -j$(nproc) sockets \
     && docker-php-ext-enable redis \
     && usermod -s /bin/bash www-data \	
-    && mkdir -pv /var/log/php-fpm	
+    && mkdir -pv /var/log/php-fpm \
+    apt-get clean && \
+    rm -rfv /var/lib/apt/lists/*	
 
 COPY --from=composer:latest /usr/bin/composer /usr/local/bin/composer	
 		
